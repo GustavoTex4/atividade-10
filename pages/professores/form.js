@@ -1,0 +1,128 @@
+
+import Pagina from '@/componentes/Pagina'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React from 'react'
+import { Button, Form } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import {AiOutlineArrowLeft, AiOutlineCheck } from 'react-icons/ai'
+import professorValidator from '@/validators/professor.Validator'
+
+
+const form = () => {
+  const {push} = useRouter()
+  const {register, handleSubmit,formState:{errors}} = useForm ()
+  function salvar(dados){
+    const professores= JSON.parse(window.localStorage.getItem('professores')) || []
+    professores.push(dados)
+    window.localStorage.setItem('professores', JSON.stringify(professores))
+    push('/professores')
+  }
+  return (
+    <>
+      <Pagina titulo='Professores'>
+        <Form>
+          <Form.Group className="mb-3" controlId="nome">
+            <Form.Label>Nome:</Form.Label>
+            <Form.Control isInvalid={true} {...register('nome',professorValidator.nome)} type="text" />
+            {
+          errors.nome &&
+          <small>{errors.nome.message}</small>
+        }
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="cpf">
+            <Form.Label>CPF:</Form.Label>
+            <Form.Control isInvalid={true} {...register('cpf',professorValidator.cpf)}  type="text" />
+            {
+          errors.cpf &&
+          <small>{errors.cpf.message}</small>
+        }
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="matricula">
+              <Form.Label>Matícula:</Form.Label>
+              <Form.Control isInvalid={true} {...register('matricula',professorValidator.matricula)}  type="text" />
+              {
+          errors.matricula &&
+          <small>{errors.matricula.message}</small>
+        }
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="salario">
+              <Form.Label>Salario:</Form.Label>
+              <Form.Control isInvalid={true} {...register('salario',professorValidator.salario)}  type="text" />
+              {
+          errors.salario &&
+          <small>{errors.salario.message}</small>
+        }
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Email:</Form.Label>
+              <Form.Control isInvalid={true} {...register('email',professorValidator.email)}  type="text" />
+              {
+          errors.email &&
+          <small>{errors.email.message}</small>
+        }
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="telefone">
+              <Form.Label>Telefone:</Form.Label>
+              <Form.Control isInvalid={true} {...register('telefone',professorValidator.telefone)}  type="text" />
+              {
+          errors.telefone &&
+          <small>{errors.telefone.message}</small>
+        }
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="cep">
+              <Form.Label>CEP:</Form.Label>
+              <Form.Control isInvalid={true} {...register('cep',professorValidator.cep)}  type="text" />
+              {
+          errors.cep &&
+          <small>{errors.cep.message}</small>
+        }
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="logradouro">
+              <Form.Label>Logradouro:</Form.Label>
+              <Form.Control isInvalid={true} {...register('logradouro',professorValidator.logradouro)}  type="text" />
+              {
+          errors.logradouro &&
+          <small>{errors.logradouro.message}</small>
+        }
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="complemento">
+              <Form.Label>Complemento:</Form.Label>
+              <Form.Control isInvalid={true} {...register('complemento',professorValidator.complemento)}  type="text" />
+              {
+          errors.complemento&&
+          <small>{errors.complemento.message}</small>
+        }
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="numero">
+              <Form.Label>Número:</Form.Label>
+              <Form.Control isInvalid={true} {...register('numero',professorValidator.numero)}  type="text" />
+              {
+          errors.numero &&
+          <small>{errors.numero.message}</small>
+        }
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="bairro">
+              <Form.Label>Bairro:</Form.Label>
+              <Form.Control isInvalid={true} {...register('bairro',professorValidator.bairro)}  type="text" />
+              {
+          errors.bairro &&
+          <small>{errors.bairro.message}</small>
+        }
+            </Form.Group>
+      
+          <div className='text-center'>
+
+          <Button variant="success" onClick={handleSubmit(salvar)}>
+         < AiOutlineCheck className='me-1'/> Salvar
+          </Button>
+          <Link href={'/professores'} className='ms-2 btn btn-danger' ><AiOutlineArrowLeft className='me-1'/>Voltar</Link>
+          </div>
+
+        </Form>
+      </Pagina>
+    </>
+  )
+}
+
+export default form
