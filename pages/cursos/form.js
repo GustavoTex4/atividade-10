@@ -1,5 +1,3 @@
-
-
 import Pagina from '@/componentes/Pagina'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -18,6 +16,7 @@ const form = () => {
     window.localStorage.setItem('cursos', JSON.stringify(cursos))
     push('/cursos')
   }
+  
   return (
     <>
       <Pagina titulo='Curso'>
