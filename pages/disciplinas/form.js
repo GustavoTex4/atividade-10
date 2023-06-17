@@ -1,4 +1,3 @@
-
 import Pagina from '@/componentes/Pagina'
 import disciplinaValidator from '@/validators/disciplinas.Validator'
 import Link from 'next/link'
@@ -28,6 +27,7 @@ const form = () => {
     window.localStorage.setItem('disciplinas', JSON.stringify(disciplinas))
     push('/disciplinas')
   }
+ 
   return (
     <>
        <Pagina titulo='Disciplina'>

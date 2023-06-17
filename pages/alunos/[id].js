@@ -1,5 +1,4 @@
 
-
 import Pagina from '@/componentes/Pagina'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -7,10 +6,12 @@ import React, { useEffect } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import {AiOutlineArrowLeft, AiOutlineCheck } from 'react-icons/ai'
+import alunoValidator from '@/validators/aluno.Validator'
+import { mask } from 'remask'
 
 const form = () => {
   const {push, query} = useRouter()
-  const {register, handleSubmit, setValue} = useForm ()
+  const {register, handleSubmit, setValue,formState:{errors}} = useForm ()
 
   useEffect(()=> {
     if(query.id){
@@ -28,50 +29,106 @@ const form = () => {
     window.localStorage.setItem('alunos', JSON.stringify(alunos))
     push('/alunos')
   }
+  function handleChange (event) {
+    const name = event.target.name
+    const value = event.target.value
+    const mascara = event.target.getAttribute('mask')
+
+    setValue(name , mask(value,mascara))
+  }
   return (
     <>
       <Pagina titulo='Alunos'>
       <Form>
           <Form.Group className="mb-3" controlId="nome">
             <Form.Label>Nome:</Form.Label>
-            <Form.Control {...register('nome')} type="text" />
+            <Form.Control isInvalid={true} {...register('nome',alunoValidator.nome)} type="text" />
+            {
+          errors.nome &&
+          <small>{errors.nome.message}</small>
+        }
           </Form.Group>
           <Form.Group className="mb-3" controlId="cpf">
             <Form.Label>CPF:</Form.Label>
-            <Form.Control {...register('cpf')}  type="text" />
+            <Form.Control isInvalid={true} mask="999.999.999-99"
+            {...register('cpf', alunoValidator.cpf)}  type="text" 
+            onChange={handleChange }/>
+            {
+          errors.cpf &&
+          <small>{errors.cpf.message}</small>
+        }
             </Form.Group>
             <Form.Group className="mb-3" controlId="matricula">
               <Form.Label>Matícula:</Form.Label>
-              <Form.Control {...register('matricula')}  type="text" />
+              <Form.Control isInvalid={true} mask="99999999999"
+               {...register('matricula',alunoValidator.matricula)}  type="text"
+               onChange={handleChange } />
+              {
+          errors.matricula &&
+          <small>{errors.matricula.message}</small>
+        }
             </Form.Group>
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email:</Form.Label>
-              <Form.Control {...register('email')}  type="text" />
+              <Form.Control isInvalid={true} {...register('email',alunoValidator.email)}  type="text" />
+              {
+          errors.email &&
+          <small>{errors.email.message}</small>
+        }
             </Form.Group>
             <Form.Group className="mb-3" controlId="telefone">
               <Form.Label>Telefone:</Form.Label>
-              <Form.Control {...register('telefone')}  type="text" />
+              <Form.Control isInvalid={true} mask="(99) 9 9999-9999"
+              {...register('telefone',alunoValidator.telefone)}  type="text"
+              onChange={handleChange } />
+              {
+          errors.telefone &&
+          <small>{errors.telefone.message}</small>
+        }
             </Form.Group>
             <Form.Group className="mb-3" controlId="cep">
               <Form.Label>CEP:</Form.Label>
-              <Form.Control {...register('cep')}  type="text" />
+              <Form.Control isInvalid={true} mask="99.999-999"
+               {...register('cep',alunoValidator.cep)}  type="text"
+               onChange={handleChange }/>
+              {
+          errors.cep &&
+          <small>{errors.cep.message}</small>
+        }
             </Form.Group>
             <Form.Group className="mb-3" controlId="logradouro">
               <Form.Label>Logradouro:</Form.Label>
-              <Form.Control {...register('logradouro')}  type="text" />
+              <Form.Control isInvalid={true} {...register('logradouro',alunoValidator.logradouro)}  type="text" />
+              {
+          errors.logradouro &&
+          <small>{errors.logradouro.message}</small>
+        }
             </Form.Group>
             <Form.Group className="mb-3" controlId="complemento">
               <Form.Label>Complemento:</Form.Label>
-              <Form.Control {...register('complemento')}  type="text" />
+              <Form.Control isInvalid={true} {...register('complemento',alunoValidator.complemento)}  type="text" />
+              {
+          errors.complemento &&
+          <small>{errors.complemento.message}</small>
+        }
             </Form.Group>
             <Form.Group className="mb-3" controlId="numero">
               <Form.Label>Número:</Form.Label>
-              <Form.Control {...register('numero')}  type="text" />
+              <Form.Control isInvalid={true} {...register('numero',alunoValidator.numero)}  type="text" />
+              {
+          errors.numero &&
+          <small>{errors.numero.message}</small>
+        }
             </Form.Group>
             <Form.Group className="mb-3" controlId="bairro">
               <Form.Label>Bairro:</Form.Label>
-              <Form.Control {...register('bairro')}  type="text" />
+              <Form.Control isInvalid={true} {...register('bairro',alunoValidator.bairro)}  type="text" />
+              {
+          errors.bairro &&
+          <small>{errors.bairro.message}</small>
+        }
             </Form.Group>
+      
         
           <div className='text-center'>
 

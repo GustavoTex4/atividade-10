@@ -6,17 +6,27 @@ import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import {AiOutlineArrowLeft, AiOutlineCheck } from 'react-icons/ai'
+import { mask } from 'remask'
 
 
 const form = () => {
   const {push} = useRouter()
-  const {register, handleSubmit,formState:{errors}} = useForm ()
+  const {register, handleSubmit,setValue,formState:{errors}} = useForm ()
   function salvar(dados){
     const alunos= JSON.parse(window.localStorage.getItem('alunos')) || []
     alunos.push(dados)
     window.localStorage.setItem('alunos', JSON.stringify(alunos))
     push('/alunos')
   }
+  function handleChange (event) {
+    const name = event.target.name
+    const value = event.target.value
+    const mascara = event.target.getAttribute('mask')
+
+    setValue(name , mask(value,mascara))
+  }
+
+
   return (
     <>
       <Pagina titulo='Alunos'>
@@ -31,7 +41,9 @@ const form = () => {
           </Form.Group>
           <Form.Group className="mb-3" controlId="cpf">
             <Form.Label>CPF:</Form.Label>
-            <Form.Control isInvalid={true} {...register('cpf', alunoValidator.cpf)}  type="text" />
+            <Form.Control isInvalid={true} mask="999.999.999-99"
+            {...register('cpf', alunoValidator.cpf)}  type="text" 
+            onChange={handleChange }/>
             {
           errors.cpf &&
           <small>{errors.cpf.message}</small>
@@ -39,7 +51,9 @@ const form = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="matricula">
               <Form.Label>Matícula:</Form.Label>
-              <Form.Control isInvalid={true} {...register('matricula',alunoValidator.matricula)}  type="text" />
+              <Form.Control isInvalid={true} mask="99999999999"
+               {...register('matricula',alunoValidator.matricula)}  type="text"
+               onChange={handleChange } />
               {
           errors.matricula &&
           <small>{errors.matricula.message}</small>
@@ -55,7 +69,9 @@ const form = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="telefone">
               <Form.Label>Telefone:</Form.Label>
-              <Form.Control isInvalid={true} {...register('telefone',alunoValidator.telefone)}  type="text" />
+              <Form.Control isInvalid={true} mask="(99) 9 9999-9999"
+              {...register('telefone',alunoValidator.telefone)}  type="text"
+              onChange={handleChange } />
               {
           errors.telefone &&
           <small>{errors.telefone.message}</small>
@@ -63,7 +79,9 @@ const form = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="cep">
               <Form.Label>CEP:</Form.Label>
-              <Form.Control isInvalid={true} {...register('cep',alunoValidator.cep)}  type="text" />
+              <Form.Control isInvalid={true} mask="99.999-999"
+               {...register('cep',alunoValidator.cep)}  type="text"
+               onChange={handleChange }/>
               {
           errors.cep &&
           <small>{errors.cep.message}</small>

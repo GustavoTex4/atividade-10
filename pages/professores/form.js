@@ -1,4 +1,4 @@
-
+import { mask } from 'remask'
 import Pagina from '@/componentes/Pagina'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -11,12 +11,19 @@ import professorValidator from '@/validators/professor.Validator'
 
 const form = () => {
   const {push} = useRouter()
-  const {register, handleSubmit,formState:{errors}} = useForm ()
+  const {register, handleSubmit,setValue,formState:{errors}} = useForm ()
   function salvar(dados){
     const professores= JSON.parse(window.localStorage.getItem('professores')) || []
     professores.push(dados)
     window.localStorage.setItem('professores', JSON.stringify(professores))
     push('/professores')
+  }
+  function handleChange (event) {
+    const name = event.target.name
+    const value = event.target.value
+    const mascara = event.target.getAttribute('mask')
+
+    setValue(name , mask(value,mascara))
   }
   return (
     <>
@@ -32,15 +39,19 @@ const form = () => {
           </Form.Group>
           <Form.Group className="mb-3" controlId="cpf">
             <Form.Label>CPF:</Form.Label>
-            <Form.Control isInvalid={true} {...register('cpf',professorValidator.cpf)}  type="text" />
+            <Form.Control isInvalid={true} mask="999.999.999-99"
+            {...register('cpf',professorValidator.cpf)}  type="text" 
+            onChange={handleChange }/>
             {
           errors.cpf &&
           <small>{errors.cpf.message}</small>
         }
             </Form.Group>
             <Form.Group className="mb-3" controlId="matricula">
-              <Form.Label>Matícula:</Form.Label>
-              <Form.Control isInvalid={true} {...register('matricula',professorValidator.matricula)}  type="text" />
+              <Form.Label>Matrícula:</Form.Label>
+              <Form.Control isInvalid={true} mask="99999999999"
+               {...register('matricula',professorValidator.matricula)}  type="text"
+               onChange={handleChange } />
               {
           errors.matricula &&
           <small>{errors.matricula.message}</small>
@@ -64,7 +75,9 @@ const form = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="telefone">
               <Form.Label>Telefone:</Form.Label>
-              <Form.Control isInvalid={true} {...register('telefone',professorValidator.telefone)}  type="text" />
+              <Form.Control isInvalid={true} mask="(99) 9 9999-9999"
+               {...register('telefone',professorValidator.telefone)}  type="text"
+               onChange={handleChange }/>
               {
           errors.telefone &&
           <small>{errors.telefone.message}</small>
@@ -72,7 +85,9 @@ const form = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="cep">
               <Form.Label>CEP:</Form.Label>
-              <Form.Control isInvalid={true} {...register('cep',professorValidator.cep)}  type="text" />
+              <Form.Control isInvalid={true} mask="99.999-999"
+               {...register('cep',professorValidator.cep)}  type="text"
+               onChange={handleChange }/>
               {
           errors.cep &&
           <small>{errors.cep.message}</small>

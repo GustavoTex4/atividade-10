@@ -17,8 +17,8 @@ cpf: {
     message: 'A quantidade de caracteres minimo é 11'
   },
   maxLength: {
-    value: 11,
-    message: 'A quantidade máxima  é 11'
+    value: 14,
+    message: 'A quantidade máxima  é 14'
   },
           
   },
@@ -36,23 +36,12 @@ cpf: {
       
     },
   },
- salario:{
-    required : 'O campo é obrigatório',
-    max: {
-      value: 20000,
-      message: 'o maximo é 20000'
-    },
-    min: {
-      value: 15000,
-      message: 'o minimo é 1500'
-    }  
-  },
  
   telefone:{
     required : 'O campo é obrigatório',
     maxLength: {
-      value: 11,
-      message: 'A quantidade de caracteres máxima é 11'
+      value: 16,
+      message: 'A quantidade de caracteres máxima é 16'
     },
     minLength: {
       value: 11,
@@ -62,12 +51,24 @@ cpf: {
   cep:{
     required : 'O campo é obrigatório',
     maxLength: {
-      value: 8,
-      message: 'A quantidade de caracteres máxima é 8'
+      value: 10,
+      message: 'A quantidade de caracteres máxima é 14'
     },
     minLength: {
       value: 8,
       message: 'A quantidade de caracteres minimo é 8'
+    },
+    
+  },
+  salario:{
+    required : 'O campo é obrigatório',
+    max: {
+      value: 50000,
+      message: 'o valor máximo é 50000'
+    },
+    min: {
+      value: 1400,
+      message: 'O valor  minimo é 1400'
     },
     
   },

@@ -1,5 +1,4 @@
-
-
+import cursoValidator from '@/validators/curso.Validator'
 import Pagina from '@/componentes/Pagina'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -10,7 +9,7 @@ import {AiOutlineArrowLeft, AiOutlineCheck } from 'react-icons/ai'
 
 const form = () => {
   const {push, query} = useRouter()
-  const {register, handleSubmit, setValue} = useForm ()
+  const {register, handleSubmit, setValue,formState:{errors}} = useForm ()
 
   useEffect(()=> {
     if(query.id){
@@ -30,18 +29,30 @@ const form = () => {
   }
   return (
     <>
-      <Pagina titulo='Curso'>
+     <Pagina titulo='Curso'>
         <Form>
           <Form.Group className="mb-3" controlId="nome">
             <Form.Label>Nome:</Form.Label>
-            <Form.Control {...register('nome')} type="text" />
+            <Form.Control isInvalid={true} {...register('nome',cursoValidator.nome)} type="text" />
           </Form.Group>
+          {
+          errors.nome &&
+          <small>{errors.nome.message}</small>
+        }
           <Form.Group className="mb-3" controlId="duracao">
             <Form.Label>Duração:</Form.Label>
-            <Form.Control {...register('duracao')}  type="text" />
+            <Form.Control isInvalid={true} {...register('duracao',cursoValidator.duracao)}  type="text" />
+            {
+          errors.duracao &&
+          <small>{errors.duracao.message}</small>
+        }
             <Form.Group className="mb-3" controlId="modalidade">
               <Form.Label>Modalidade:</Form.Label>
-              <Form.Control {...register('modalidade')}  type="text" />
+              <Form.Control isInvalid={true} {...register('modalidade',cursoValidator.modalidade)}  type="text" />
+              {
+          errors.modalidade &&
+          <small>{errors.modalidade.message}</small>
+        }
             </Form.Group>
           </Form.Group>
           <div className='text-center'>

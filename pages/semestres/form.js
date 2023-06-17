@@ -1,5 +1,4 @@
-
-
+import { mask } from 'remask'
 import Pagina from '@/componentes/Pagina'
 import semestreValidator from '@/validators/semestre.Validator'
 import Link from 'next/link'
@@ -11,12 +10,19 @@ import {AiOutlineArrowLeft, AiOutlineCheck } from 'react-icons/ai'
 
 const form = () => {
   const {push} = useRouter()
-  const {register, handleSubmit,formState:{errors}} = useForm ()
+  const {register, handleSubmit,setValue,formState:{errors}} = useForm ()
   function salvar(dados){
     const semestres = JSON.parse(window.localStorage.getItem('semestres')) || []
     semestres.push(dados)
     window.localStorage.setItem('semestres', JSON.stringify(semestres))
     push('/semestres')
+  }
+  function handleChange (event) {
+    const name = event.target.name
+    const value = event.target.value
+    const mascara = event.target.getAttribute('mask')
+
+    setValue(name , mask(value,mascara))
   }
   return (
     <>
@@ -32,14 +38,18 @@ const form = () => {
           </Form.Group>
           <Form.Group className="mb-3" controlId="data_inicio">
             <Form.Label>Data de início:</Form.Label>
-            <Form.Control isInvalid={true} {...register('data_inicio',semestreValidator.data_inicio)}  type="text" />
+            <Form.Control isInvalid={true} mask="99/99/9999"
+             {...register('data_inicio',semestreValidator.data_inicio)}  type="text"
+             onChange={handleChange } />
             {
           errors.data_inicio &&
           <small>{errors.data_inicio.message}</small>
         }
             <Form.Group className="mb-3" controlId="data_fim">
               <Form.Label>Data do fim:</Form.Label>
-              <Form.Control isInvalid={true} {...register('data_fim',semestreValidator.data_fim)}  type="text" />
+              <Form.Control isInvalid={true} mask="99/99/9999"
+               {...register('data_fim',semestreValidator.data_fim)}  type="text" 
+               onChange={handleChange }/>
               {
           errors.data_fim &&
           <small>{errors.data_fim.message}</small>
